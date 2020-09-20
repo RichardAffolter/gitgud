@@ -1,0 +1,34 @@
+---
+title: "Week 1 Exercise"
+author: "Richard Affolter"
+date: "20.09.2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+### Sample 100 values from a log-normal distribution
+```{r}
+library(ggplot2)
+m <- 1
+s <- 0.25
+location <- log(m^2 / sqrt(s^2 + m^2))
+shape <- sqrt(log(1 + (s^2 / m^2)))
+x <- rlnorm(n=100, location, shape)
+```
+
+
+### create a histogram of the distribution and the distribution on the log scale
+```{r}
+library(ggplot2)
+ggplot() + geom_histogram(aes(x), binwidth = 1/16)+ labs(title = expression("Histogram of log-normal distribution, " ~ mu ~ " = 1, "~ sigma ~ " = 0.25"))
+
+ggplot() + geom_histogram(aes(x), binwidth = 1/16) + scale_x_log10() +
+labs(title = expression("Histogram of log-normal distribution, " ~ mu ~ " = 1, "~ sigma ~ " = 0.25, log-scale"))
+```
+
+
+### Report the mean and variance of the sample
+The mean of the sample is `r toString(round(mean(x),3))` and the variance is `r toString(round(sd(x),3))`.
+
